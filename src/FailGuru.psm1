@@ -41,7 +41,7 @@ function Get-Fill {
     [String]::new($c)
 }
 
-function Get-Square {
+function Get-Rectangle {
     param(
         [string]
         $Message,
@@ -130,7 +130,7 @@ function Invoke-GuruMeditation {
     }
     $guruAlert = Format-GuruAlert $GuruCode
     $Host.UI.RawUI.cursorsize = 0
-    $s = @( (Get-Square -Message $Message -GuruAlert $guruAlert -Width $Width -Border '#'), (Get-Square -Message $Message -GuruAlert $guruAlert -Width $Width -Border ' '))
+    $s = @( (Get-Rectangle -Message $Message -GuruAlert $guruAlert -Width $Width -Border '#'), (Get-Rectangle -Message $Message -GuruAlert $guruAlert -Width $Width -Border ' '))
     $i = 0
     do {
         Write-Host "$start`n$($s[$i%2])`n" -ForegroundColor Red -NoNewline

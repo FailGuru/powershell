@@ -1,6 +1,5 @@
-if ($null -ne $Env:DEBUG_GURU_MODE) {
-    Set-StrictMode -Version Latest
-}
+Set-StrictMode -Version Latest
+
 
 function Get-Line {
     param(
@@ -90,16 +89,26 @@ function Invoke-GuruMeditation {
         [switch]
         $FullWidth
     )
+
+    $MinBlinks = $Env:MIN_GURU_BLINKS -as [int]
+    if ($MinBlinks -le 0) {
+        $MinBlinks = 6
+    } 
+
+    $MaxBlinks = $Env:MAX_GURU_BLINKS -as [int]
+    if ($MaxBlinks -le 0) {
+        $MaxBlinks = [int]::MaxValue
+    } 
+
+    if ($MaxBlinks -lt $MinBlinks) {
+        $MaxBlinks = $MinBlinks
+    }
+    
     $esc = [char]27
     $obg = $Host.UI.RawUI.BackgroundColor
     $ocs = $Host.UI.RawUI.cursorsize
     $y = $Host.UI.RawUI.CursorPosition.Y
 
-    if ($null -eq $Env:MinimumGuruFlashes -or !($Env:MinimumGuruFlashes -is [int])) {
-        $MinimumGuruFlashes = 6
-    } else {
-        $MinimumGuruFlashes = $Env:MinimumGuruFlashes
-    }
 
     if ($FullWidth.IsPresent -or $CoverTerminal.IsPresent) {
         $Width = $Host.UI.RawUI.WindowSize.Width
@@ -136,7 +145,10 @@ function Invoke-GuruMeditation {
         Write-Host "$start`n$($s[$i%2])`n" -ForegroundColor Red -NoNewline
         $i++
         Start-Sleep -Seconds 1
-    } while ($i -lt $MinimumGuruFlashes -or !([Console]::KeyAvailable))
+        if ($i -eq $MaxBlinks - 1) {
+            break
+        }
+    } while ($i -lt $MinBlinks -or !([Console]::KeyAvailable))
     $Host.UI.RawUI.cursorsize = $ocs
     if ($CoverTerminal.IsPresent) {
         $Host.UI.RawUI.BackgroundColor = $obg

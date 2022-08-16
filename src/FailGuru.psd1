@@ -18,7 +18,7 @@
 
             LicenseUri   = "https://github.com/FailGuru/powershell/blob/main/LICENSE"
             ProjectUri   = "https://github.com/FailGuru/powershell"
-            ReleaseNotes = "https://github.com/FailGuru/powershell/CHANGELOG.md"
+            ReleaseNotes = "https://github.com/FailGuru/powershell/blob/main/CHANGELOG.md"
             # Prerelease   = "alpha"
         }
     }

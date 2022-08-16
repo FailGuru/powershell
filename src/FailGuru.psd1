@@ -1,6 +1,6 @@
 @{
     RootModule        = "FailGuru.psm1"
-    ModuleVersion     = "1.0.0.1"
+    ModuleVersion     = "1.0.0.2"
     GUID              = "b39020b2-61e6-4e29-a2f2-111f062eb18d"
     Author            = "Anders Laub"
     Copyright         = "(c) 2022 Anders Laub"

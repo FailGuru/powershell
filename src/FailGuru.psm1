@@ -127,7 +127,7 @@ function Invoke-GuruMeditation {
         $y = 0
     }
 
-    $start = "$esc[$($y);0H"
+
     if ($Width -lt 30) {
         $Width = $Host.UI.RawUI.WindowSize.Width
         $Message = "requested width too short for guru."
@@ -141,6 +141,13 @@ function Invoke-GuruMeditation {
     $Host.UI.RawUI.cursorsize = 0
     $s = @( (Get-Rectangle -Message $Message -GuruAlert $guruAlert -Width $Width -Border '#'), (Get-Rectangle -Message $Message -GuruAlert $guruAlert -Width $Width -Border ' '))
     $i = 0
+
+    if ($y -ge $Host.UI.RawUI.WindowSize.Height - 6) {
+        Write-Host "`n`n`n`n`n`n" -NoNewline
+        $y = $y-6
+    }
+
+    $start = "$esc[$($y);0H"
     do {
         Write-Host "$start`n$($s[$i%2])`n" -ForegroundColor Red -NoNewline
         $i++
